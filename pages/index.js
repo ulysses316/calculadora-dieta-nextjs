@@ -28,8 +28,8 @@ export default function Home() {
         <div className='table-section'>
           {dataForm && (
             <>
-              <h3>Peso Actual</h3>
               <Table headers={["IMC", "Peso Ideal", "P. Ajustado"]} data={[dataForm.primary.IMC, dataForm.primary.ideal, dataForm.primary.adjusted]} />
+              <h3>Peso Actual</h3>
               <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.current.benedict, dataForm.current.benedictETA, dataForm.current.benedictFAF, dataForm.current.benedictTotal]} />
               <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.current.mifflin, dataForm.current.mifflintETA, dataForm.current.mifflinFAF, dataForm.current.mifflinTotal]} />
               <h3>Peso Ajustado</h3>
