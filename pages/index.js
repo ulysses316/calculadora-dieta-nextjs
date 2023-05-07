@@ -26,16 +26,20 @@ export default function Home() {
       <main className='container'>
         <Form onDataProcessed={handleData} />
         <div className='table-section'>
-          <h3>Peso Actual</h3>
-          {dataForm && (<Table headers={["IMC", "Peso Ideal", "P. Ajustado"]} data={[dataForm.primary.IMC, dataForm.primary.ideal, dataForm.primary.adjusted]} />)}
-          {dataForm && (<Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.current.benedict, dataForm.current.benedictETA, dataForm.current.benedictFAF, dataForm.current.benedictTotal]} />)}
-          {dataForm && (<Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.current.mifflin, dataForm.current.mifflintETA, dataForm.current.mifflinFAF, dataForm.current.mifflinTotal]} />)}
-          <h3>Peso Ajustado</h3>
-          {dataForm && (<Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.adjusted.benedict, dataForm.adjusted.benedictETA, dataForm.adjusted.benedictFAF, dataForm.adjusted.benedictTotal]} />)}
-          {dataForm && (<Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.adjusted.mifflin, dataForm.adjusted.mifflintETA, dataForm.adjusted.mifflinFAF, dataForm.adjusted.mifflinTotal]} />)}
-          <h3>Peso Ideal</h3>
-          {dataForm && (<Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.ideal.benedict, dataForm.ideal.benedictETA, dataForm.ideal.benedictFAF, dataForm.ideal.benedictTotal]} />)}
-          {dataForm && (<Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.ideal.mifflin, dataForm.ideal.mifflintETA, dataForm.ideal.mifflinFAF, dataForm.ideal.mifflinTotal]} />)}
+          {dataForm && (
+            <>
+              <h3>Peso Actual</h3>
+              <Table headers={["IMC", "Peso Ideal", "P. Ajustado"]} data={[dataForm.primary.IMC, dataForm.primary.ideal, dataForm.primary.adjusted]} />
+              <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.current.benedict, dataForm.current.benedictETA, dataForm.current.benedictFAF, dataForm.current.benedictTotal]} />
+              <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.current.mifflin, dataForm.current.mifflintETA, dataForm.current.mifflinFAF, dataForm.current.mifflinTotal]} />
+              <h3>Peso Ajustado</h3>
+              <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.adjusted.benedict, dataForm.adjusted.benedictETA, dataForm.adjusted.benedictFAF, dataForm.adjusted.benedictTotal]} />
+              <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.adjusted.mifflin, dataForm.adjusted.mifflintETA, dataForm.adjusted.mifflinFAF, dataForm.adjusted.mifflinTotal]} />
+              <h3>Peso Ideal</h3>
+              <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.ideal.benedict, dataForm.ideal.benedictETA, dataForm.ideal.benedictFAF, dataForm.ideal.benedictTotal]} />
+              <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.ideal.mifflin, dataForm.ideal.mifflintETA, dataForm.ideal.mifflinFAF, dataForm.ideal.mifflinTotal]} />
+            </>
+          )}
         </div>
       </main>
     </>

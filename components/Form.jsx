@@ -80,7 +80,7 @@ export default function Form({ onDataProcessed }) {
 
     return (
         <section className="mt-3">
-            <form onClick={handleSubmit}>
+            <form>
                 <div className="mb-3">
                     <label htmlFor="weight" className="form-label">
                         Peso en kg
@@ -148,7 +148,7 @@ export default function Form({ onDataProcessed }) {
                     <option value={4}>Mucha (60%)</option>
                 </select>
                 <div className="d-flex justify-content-center align-items-center mt-5">
-                    <button type="submit" className="btn btn-primary">
+                    <button onClick={handleSubmit} type="button" className="btn btn-primary">
                         Enviar
                     </button>
                 </div>
