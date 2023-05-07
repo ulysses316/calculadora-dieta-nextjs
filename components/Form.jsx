@@ -80,7 +80,7 @@ export default function Form({ onDataProcessed }) {
 
     return (
         <section className="mt-3">
-            <form onSubmit={handleSubmit}>
+            <form onClick={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="weight" className="form-label">
                         Peso en kg

@@ -18,7 +18,7 @@ export default function Home() {
     <>
       <Head>
         <title>Calculadora Dieta</title>
-        <meta name="description" content="Made with <3 & </> for Arely by Ulises" />
+        <meta name="description" content="Made with love for Arely by Ulises" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
