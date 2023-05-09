@@ -62,19 +62,19 @@ export default function TableGoal({ caloriasTotal, goal }) {
                         <th>Carbohidratos</th>
                         <td><input type="number" value={CHPorcent} onChange={(e) => setCHPorcent(e.target.value)} /></td>
                         <td>{(caloriasTotal * CHPorcent) / 100}</td>
-                        <td>{Math.round(caloriasTotal / 4)}</td>
+                        <td>{Math.round(((caloriasTotal * CHPorcent) / 100)/4)}</td>
                     </tr>
                     <tr>
                         <th>Proteina</th>
                         <td><input type="number" value={protPorcent} onChange={(e) => setProtPorcent(e.target.value)} /></td>
                         <td>{(caloriasTotal * protPorcent) / 100}</td>
-                        <td>{Math.round(caloriasTotal / 4)}</td>
+                        <td>{Math.round(((caloriasTotal * protPorcent) / 100)/4)}</td>
                     </tr>
                     <tr>
                         <th>Lipido</th>
                         <td><input type="number" value={liPorcent} onChange={(e) => setLiPorcent(e.target.value)} /></td>
                         <td>{(caloriasTotal * liPorcent) / 100}</td>
-                        <td>{Math.round(caloriasTotal / 9)}</td>
+                        <td>{Math.round(((caloriasTotal * liPorcent) / 100)/9)}</td>
                     </tr>
                     <tr>
                         <th>Total</th>
