@@ -25,7 +25,7 @@ export default function TableGoal({ caloriasTotal, goal }) {
             setProtPorcent(30);
             setLiPorcent(15);
         }
-    }, [])
+    }, [goal])
 
     return (
 
