@@ -9,6 +9,7 @@ export default function Form({ onDataProcessed }) {
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
     const [faf, setFaf] = useState("1");
+    const [goal, setGoal] = useState("1")
 
     const handleSubmit = () => {
 
@@ -43,7 +44,8 @@ export default function Form({ onDataProcessed }) {
             primary: {
                 IMC: IMC,
                 ideal: weights.pesoIdeal,
-                adjusted: weights.pesoAjustado
+                adjusted: weights.pesoAjustado,
+                goal: goal
             },
             current: {
                 benedict: benedict,
@@ -138,7 +140,7 @@ export default function Form({ onDataProcessed }) {
                         </label>
                     </div>
                 </div>
-                <label htmlFor="physical-activity" className="form-label">
+                <label htmlFor="physical-activity" className="form-label mt-4">
                     Actividad fisica
                 </label>
                 <select className="form-select" onChange={(e) => setFaf(e.target.value)}>
@@ -146,6 +148,14 @@ export default function Form({ onDataProcessed }) {
                     <option value={2}>Poca (30%)</option>
                     <option value={3}>Moderada (45%)</option>
                     <option value={4}>Mucha (60%)</option>
+                </select>
+                <label htmlFor="physical-activity" className="form-label mt-3">
+                    Meta
+                </label>
+                <select className="form-select" onChange={(e) => setGoal(e.target.value)}>
+                    <option value={1}>Normal</option>
+                    <option value={2}>Bajar de peso</option>
+                    <option value={3}>Aumentar masa muscular</option>
                 </select>
                 <div className="d-flex justify-content-center align-items-center mt-5">
                     <button onClick={handleSubmit} type="button" className="btn btn-primary">
