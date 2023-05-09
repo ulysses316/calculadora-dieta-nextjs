@@ -80,7 +80,7 @@ export default function TableGoal({ caloriasTotal, goal }) {
                         <th>Total</th>
                         <td>100</td>
                         <td>{caloriasTotal}</td>
-                        <td>{Math.round(caloriasTotal / 4) + Math.round(caloriasTotal / 4) + Math.round(caloriasTotal / 9)}</td>
+                        <td>{Math.round(((caloriasTotal * CHPorcent) / 100)/4) + Math.round(((caloriasTotal * protPorcent) / 100)/4) + Math.round(((caloriasTotal * liPorcent) / 100)/9)}</td>
                     </tr>
                 </tbody>
             </table>
