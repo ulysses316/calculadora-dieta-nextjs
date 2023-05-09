@@ -33,10 +33,16 @@ export default function TableGoal({ caloriasTotal, goal }) {
         <style jsx>
             {
                 `
+
+                th, td{
+                    width: 25%;
+                }
+
                 input{
                     border: none;
                     background-color: transparent;
                     font-weight: 600;
+                    width: 100%
                 }
                 `
             }
@@ -45,10 +51,10 @@ export default function TableGoal({ caloriasTotal, goal }) {
             <table className="table table-striped mt-3">
                 <thead>
                     <tr>
-                        <th scope="col">Nutrimento</th>
-                        <th scope="col">%</th>
-                        <th scope="col">Kcal</th>
-                        <th scope="col">Gramos</th>
+                        <th>Nutrimento</th>
+                        <th>%</th>
+                        <th>Kcal</th>
+                        <th>Gramos</th>
                     </tr>
                 </thead>
                 <tbody>
