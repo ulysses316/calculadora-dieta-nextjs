@@ -78,7 +78,7 @@ export default function TableGoal({ caloriasTotal, goal }) {
                     </tr>
                     <tr>
                         <th>Total</th>
-                        <td>100</td>
+                        <td>{parseInt(CHPorcent) + parseInt(protPorcent) + parseInt(liPorcent)}</td>
                         <td>{caloriasTotal}</td>
                         <td>{Math.round(((caloriasTotal * CHPorcent) / 100)/4) + Math.round(((caloriasTotal * protPorcent) / 100)/4) + Math.round(((caloriasTotal * liPorcent) / 100)/9)}</td>
                     </tr>
