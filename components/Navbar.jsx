@@ -1,11 +1,12 @@
 import React from 'react'
+import Image from 'next/image'
 
 export default function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">
-                    Calculadora de dieta
+                    <Image src="/acupuntura.png" width={60} height={62} />
                 </a>
                 <button
                     className="navbar-toggler"
