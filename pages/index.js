@@ -1,71 +1,111 @@
 import { useState } from 'react'
-import { Inter } from 'next/font/google'
-
 import Head from 'next/head'
-import Navbar from '@/components/Navbar'
-import Table from '@/components/Table'
-import Form from '@/components/Form'
-import AcordionBody from '@/components/common/AcordionBody'
-import AcordionItem from '@/components/common/AcordionItem'
-import TableGoal from '@/components/TableGoal'
 
-const inter = Inter({ subsets: ['latin'] })
+import Header from '@/components/Header'
+import PatientForm from '@/components/PatientForm'
+import BodySummary from '@/components/BodySummary'
+import EnergyMatrix from '@/components/EnergyMatrix'
+import MacroTable from '@/components/MacroTable'
+import {
+  ACTIVITY_LEVELS,
+  FORMULAS,
+  GOALS,
+  WEIGHT_KINDS,
+  computeResults,
+  missingFields,
+} from '@/lib/nutrition'
+
+const EMPTY_PATIENT = { weight: '', height: '', age: '', sex: '', activity: '1' }
+const presetFor = (goal) => ({ ...GOALS.find((g) => g.value === goal).preset })
+
+function listToText(items) {
+  if (items.length <= 1) return items.join('')
+  return `${items.slice(0, -1).join(', ')} y ${items[items.length - 1]}`
+}
 
 export default function Home() {
+  const [patient, setPatient] = useState(EMPTY_PATIENT)
+  const [selection, setSelection] = useState(null)
+  const [goal, setGoal] = useState('1')
+  const [percents, setPercents] = useState(presetFor('1'))
 
-  const [dataForm, setDataForm] = useState(null);
-  const [caloriasTotal, setCaloriasTotal] = useState(null)
+  const missing = missingFields(patient)
+  const results = missing.length === 0 ? computeResults(patient) : null
 
-  const handleData = (data) => {
-    setDataForm(data)
+  const activityPct = ACTIVITY_LEVELS.find((a) => a.value === patient.activity).pct
+  const selectedEnergy = results && selection ? results.energy[selection.kind][selection.formula] : null
+  const sourceLabel = selection
+    ? `${FORMULAS.find((f) => f.key === selection.formula).label}, ${WEIGHT_KINDS.find((k) => k.key === selection.kind).label.toLowerCase()}`
+    : ''
+
+  const handleGoalChange = (value) => {
+    setGoal(value)
+    setPercents(presetFor(value))
+  }
+
+  const handleReset = () => {
+    setPatient(EMPTY_PATIENT)
+    setSelection(null)
+    setGoal('1')
+    setPercents(presetFor('1'))
   }
 
   return (
     <>
       <Head>
-        <title>Calculadora Dieta</title>
+        <title>Calculadora de dieta</title>
         <meta name="description" content="Made with ❤️ for Arely by Ulises" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <main className='container mb-4'>
-        <Form onDataProcessed={handleData} />
-        <div className='table-section'>
+      <Header />
+      <main className="layout">
+        <aside className="layout__side">
+          <PatientForm patient={patient} onChange={setPatient} onReset={handleReset} />
+        </aside>
 
-          {dataForm && (
+        <div className="layout__main">
+          {results ? (
             <>
-              <Table headers={["IMC", "Peso Ideal", "P. Ajustado"]} data={[dataForm.primary.IMC, dataForm.primary.ideal, dataForm.primary.adjusted]} />
-              <AcordionBody>
-                <AcordionItem title={"Peso Actual"} collapse={"One"}>
-                  <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.current.benedict, dataForm.current.benedictETA, dataForm.current.benedictFAF, dataForm.current.benedictTotal]} />
-                  <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.current.mifflin, dataForm.current.mifflintETA, dataForm.current.mifflinFAF, dataForm.current.mifflinTotal]} />
-                  <div className='d-flex justify-content-around align-items-center'>
-                    <button onClick={() => setCaloriasTotal(dataForm.current.benedictTotal)} type="button" className="btn btn-primary">Benedict</button>
-                    <button onClick={() => setCaloriasTotal(dataForm.current.mifflinTotal)} type="button" className="btn btn-primary">Mifflin</button>
-                  </div>
-                </AcordionItem>
-                <AcordionItem title={"Peso Ajustado"} collapse={"Two"}>
-                  <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.adjusted.benedict, dataForm.adjusted.benedictETA, dataForm.adjusted.benedictFAF, dataForm.adjusted.benedictTotal]} />
-                  <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.adjusted.mifflin, dataForm.adjusted.mifflintETA, dataForm.adjusted.mifflinFAF, dataForm.adjusted.mifflinTotal]} />
-                  <div className='d-flex justify-content-around align-items-center'>
-                    <button onClick={() => setCaloriasTotal(dataForm.adjusted.benedictTotal)} type="button" className="btn btn-primary">Benedict</button>
-                    <button onClick={() => setCaloriasTotal(dataForm.adjusted.mifflinTotal)} type="button" className="btn btn-primary">Mifflin</button>
-                  </div>
-                </AcordionItem>
-                <AcordionItem title={"Peso Ideal"} collapse={"Three"}>
-                  <Table headers={["Benedict", "ETA", "FAF", "Total"]} data={[dataForm.ideal.benedict, dataForm.ideal.benedictETA, dataForm.ideal.benedictFAF, dataForm.ideal.benedictTotal]} />
-                  <Table headers={["Mifflin", "ETA", "FAF", "Total"]} data={[dataForm.ideal.mifflin, dataForm.ideal.mifflintETA, dataForm.ideal.mifflinFAF, dataForm.ideal.mifflinTotal]} />
-                  <div className='d-flex justify-content-around align-items-center'>
-                    <button onClick={() => setCaloriasTotal(dataForm.ideal.benedictTotal)} type="button" className="btn btn-primary">Benedict</button>
-                    <button onClick={() => setCaloriasTotal(dataForm.ideal.mifflinTotal)} type="button" className="btn btn-primary">Mifflin</button>
-                  </div>
-                </AcordionItem>
-              </AcordionBody>
+              <BodySummary bmi={results.bmi} weightByKind={results.weightByKind} />
+              <EnergyMatrix
+                energy={results.energy}
+                weightByKind={results.weightByKind}
+                activityPct={activityPct}
+                selection={selection}
+                onSelect={setSelection}
+              />
+              {selectedEnergy ? (
+                <MacroTable
+                  totalKcal={selectedEnergy.total}
+                  sourceLabel={sourceLabel}
+                  goal={goal}
+                  onGoalChange={handleGoalChange}
+                  percents={percents}
+                  onPercentChange={(key, value) => setPercents((p) => ({ ...p, [key]: value }))}
+                  onResetPercents={() => setPercents(presetFor(goal))}
+                />
+              ) : (
+                <section className="panel panel--placeholder">
+                  <h2 className="panel__title"><span className="step">3</span>Distribución de macronutrientes</h2>
+                  <p>Elige una opción del requerimiento energético para calcular carbohidratos, proteína y lípidos.</p>
+                </section>
+              )}
             </>
+          ) : (
+            <section className="panel panel--placeholder empty">
+              <h2 className="panel__title">Los resultados aparecerán aquí</h2>
+              <p>
+                Captura {listToText(missing)} del paciente. Al completarlos verás el IMC, el peso ideal y ajustado,
+                el gasto energético con Harris-Benedict y Mifflin-St Jeor, y la distribución de macronutrientes.
+              </p>
+              <ol className="empty__steps">
+                <li>Composición corporal</li>
+                <li>Requerimiento energético</li>
+                <li>Macronutrientes</li>
+              </ol>
+            </section>
           )}
-
-          {caloriasTotal && (<TableGoal caloriasTotal={caloriasTotal} goal={dataForm.primary.goal} />)}
         </div>
       </main>
     </>

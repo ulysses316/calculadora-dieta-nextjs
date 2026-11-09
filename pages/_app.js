@@ -1,11 +1,13 @@
+import { Figtree, Lexend } from 'next/font/google'
 import '@/styles/globals.css'
-import { useEffect } from 'react'
-import '../node_modules/normalizecss/normalize.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.css'
+
+const body = Figtree({ subsets: ['latin'], variable: '--font-body' })
+const display = Lexend({ subsets: ['latin'], variable: '--font-display' })
 
 export default function App({ Component, pageProps }) {
-  useEffect(() => {
-    import('bootstrap/dist/js/bootstrap')
-  }, [])
-  return <Component {...pageProps} />
+  return (
+    <div className={`${body.variable} ${display.variable} app`}>
+      <Component {...pageProps} />
+    </div>
+  )
 }
